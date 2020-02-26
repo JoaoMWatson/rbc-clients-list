@@ -1,23 +1,10 @@
-import requests
-import time
-import json
-import pandas as pd
-from bs4 import BeautifulSoup
+main_info = [[], [], [], [], [], [], [], [], [], [], [], [], []]
 
+contact_info = [[], [], []]
 
-url = "http://www.oconsumidor.gov.br/laboratorios/rbc/detalhe_laboratorio.asp?num_certificado=461&situacao=AT&area=ELETRICIDADE%20E%20MAGNETISMO"
+main_info[0].append("lalala")
+main_info[0].append("adasd")
+main_info[0].append("dfsvs")
+main_info[0].append("vnfjgh")
 
-r = requests.get(url)
-
-soup = BeautifulSoup(r.content, 'html.parser')
-
-mainTable = soup.find("table", attrs={
-                      'width': "60%", "cellspacing": "2", "cellpadding": "2", "border": "0", "align": "center"})
-
-contactTable = mainTable.find_next("table", attrs={
-                         "width": "60%", "cellspacing": "2", "cellpadding": "2", "align": "center"})
-
-print(mainTable)
-print(contactTable)
-
-r.close()
+print(main_info)
