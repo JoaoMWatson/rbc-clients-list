@@ -3,14 +3,7 @@ import time
 import json
 import pandas as pd
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
 
-options = Options()
-options.headless = True
-driver = webdriver.Firefox(options=options)
-
-count = 0
 
 areaAtuacao = ["ELETRICIDADE E MAGNETISMO",
                "RADIA%C7%D5ES%20IONIZANTES", "AC%DASTICA%2"+"0E%20VIBRA%C7%D5ES",
@@ -25,20 +18,22 @@ areaAtuacao = ["ELETRICIDADE E MAGNETISMO",
 for i in range(0, 15):
     for numAcreditacao in range(1, 1051):
         try:
-            url = str("http://www.inmetro.gov.br/laboratorios/rbc/detalhe_laboratorio.asp?num_certificado=" +
-                      str(numAcreditacao)+"&situacao=AT&area="+areaAtuacao[i])
+            # url = str("http://www.inmetro.gov.br/laboratorios/rbc/detalhe_laboratorio.asp?num_certificado=" +
+            #           str(numAcreditacao)+"&situacao=AT&area="+areaAtuacao[i])
 
-            session = requests.session()
+            url = "http://www.oconsumidor.gov.br/laboratorios/rbc/detalhe_laboratorio.asp?num_certificado=461&situacao=AT&area=ELETRICIDADE%20E%20MAGNETISMO"
 
-            print("\n Ta abrindo", numAcreditacao)
-            response = session.get(url)
-            print("\n Abriu", numAcreditacao)
-            soup = BeautifulSoup(response.text, 'html.parser')
+            r = requests.get(url)
+
+            soup = BeautifulSoup(r.content, 'html.parser')
+
+            mainTable = soup.find("table", attrs={
+                                  'width': "60%", "cellspacing": "2", "cellpadding": "2", "border": "0", "align": "center"})
+
+            contactTable = soup.find("table", attrs={"width"="60%", "cellspacing": "2", "cellpadding": "2", "align": "center"})
 
         except Exception as e:
             print(e)
-            
-        finally:
-            response.close()
 
-print("Acabou")
+        finally:
+            r.close()
